@@ -86,7 +86,7 @@ const Home =()=>{
               d.setTime(d.getTime() + (1*24*60*60*1000));
               var expires = d.toUTCString();                           
               var userlogin={'name':values['userName'],'password':values['password']};
-              fetch("http://127.0.0.1:8000/denglu" , {
+              fetch("http://172.16.1.71:8000/denglu" , {
                 method: 'POST',
                 credentials: 'include',
                 headers: {
@@ -253,7 +253,7 @@ const Home =()=>{
           } else if (school === '') {
             alert('学校不能为空!')
           } else {
-            fetch("http://127.0.0.1:8000/zhuce", {
+            fetch("http://172.16.1.71:8000/zhuce", {
               headers: {
                 'Content-Type': 'application/json'
               },

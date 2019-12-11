@@ -20,7 +20,7 @@ class Article extends Component{
   }
    componentDidMount(){$("#content-tap").css({"margin-top":'230px',"background":'none'})}
   getDate(){
-     return fetch("http://127.0.0.1:8000/show?card="+this.props.article_id , {
+     return fetch("http://172.16.1.71:8000/show?card="+this.props.article_id , {
         method: 'GET',
         credentials: 'include',
         headers: {
@@ -84,7 +84,7 @@ class Article extends Component{
     console.log(this.props.user_id)
     if(this.props.user_id){
     const className='.'+e+this.props.id;
-    if(!this.state.like){http.post('http://127.0.0.1:8000/doing?'+e+'='+this.state.article_id+'&sure=yes',).then(data=>{
+    if(!this.state.like){http.post('http://172.16.1.71:8000/doing?'+e+'='+this.state.article_id+'&sure=yes',).then(data=>{
       if(data['message']){
          $(className).css({'color':'#03a9f457','font-size':'25px'});
          const likeCount=parseInt(this.state.likeCount)+1;
@@ -93,7 +93,7 @@ class Article extends Component{
     });
     }
 //取消点赞   
-    else{http.post('http://127.0.0.1:8000/doing?'+e+'='+this.state.article_id+'&sure=no',).then(data=>{
+    else{http.post('http://172.16.1.71:8000/doing?'+e+'='+this.state.article_id+'&sure=no',).then(data=>{
       if(data['message']){
          $(className).css({'color':'gray','font-size':'15px'});
          const likeCount=parseInt(this.state.likeCount)-1;
@@ -107,7 +107,7 @@ class Article extends Component{
   collect=(e)=>{
     if(this.props.user_id){
       const className='.'+e+this.props.id;
-      if(!this.state.collect){http.post('http://127.0.0.1:8000/doing?'+e+'='+this.state.article_id+'&sure=yes',).then(data=>{
+      if(!this.state.collect){http.post('http://172.16.1.71:8000/doing?'+e+'='+this.state.article_id+'&sure=yes',).then(data=>{
         if(data['message']){
            $(className).css({'color':'#03a9f457','font-size':'25px'});  
            this.setState({collect:true})
@@ -115,7 +115,7 @@ class Article extends Component{
       });
       }
   //取消收藏  
-      else{http.post('http://127.0.0.1:8000/doing?'+e+'='+this.state.article_id+'&sure=no',).then(data=>{
+      else{http.post('http://172.16.1.71:8000/doing?'+e+'='+this.state.article_id+'&sure=no',).then(data=>{
         if(data['message']){
            $(className).css({'color':'gray','font-size':'15px'});       
            this.setState({collect:false})
@@ -261,7 +261,7 @@ class Comments extends React.Component {
      const text=$('#comment'+this.props.id).text();console.log(text);
      if(this.props.user_id){
      const data={card_id:this.props.article_id,user_id:this.props.user_id,comments:text}
-     http.post('http://127.0.0.1:8000/doing?commits=true',data);
+     http.post('http://172.16.1.71:8000/doing?commits=true',data);
       setTimeout(() => {
         
         this.setState({

@@ -41,7 +41,7 @@ componentDidMount(){
     }, 50);
   }   
      more=()=>{    
-     return fetch("http://127.0.0.1:8000/show?cardlist="+this.state.index+"&kind="+this.state.kind, {
+     return fetch("http://172.16.1.71:8000/show?cardlist="+this.state.index+"&kind="+this.state.kind, {
         method: 'GET',
         credentials: 'include',
         headers: {
@@ -86,7 +86,7 @@ componentDidMount(){
           
         } 
         }
-        return(<div style={{width: '650px' ,height: 'auto',background: '#ffffff',color: 'black',margin:'auto',border:'#80808038 1px solid',float:'left'}}>
+        return(<div style={{width: '60%' ,height: 'auto',background: '#ffffff',color: 'black',margin:'auto',border:'#80808038 1px solid',position:'absolute',left:'10%'}}>
             <div  style={{width: '100%' ,height: 50,background: '#ffffff',margin:'auto',paddingLeft:15,textAlign:'left'}}>
                 <div id="article" className='nav' style={p} onClick={this.point.bind(this,'article')} >
                     <h3 >文章</h3>

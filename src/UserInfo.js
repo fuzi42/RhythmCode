@@ -66,7 +66,7 @@ class Info extends Component {
   }
   getData() { //请求数据函数
 
-   return fetch("http://127.0.0.1:8000/show?people=" + this.props.user_id, {
+   return fetch("http://172.16.1.71:8000/show?people=" + this.props.user_id, {
       method: 'GET',
       headers: {
         'content-type': "application/json" //json格式
@@ -233,7 +233,7 @@ if (info.file.status === 'done') {
 }
 getData(user_id) { //请求数据函数
 
-fetch("http://127.0.0.1:8000/userinfo/" + user_id, {
+fetch("http://172.16.1.71:8000/userinfo/" + user_id, {
   method: 'GET',
   headers: {
     'content-type': "application/json" //json格式
@@ -262,7 +262,7 @@ var url='';
 var button= '';
 
 
- url = "http://127.0.0.1:8000/upload/image?kind=avator";
+ url = "http://172.16.1.71:8000/upload/image?kind=avator";
  button= <Button htmlType="submit" onClick={this.onSubmit} type="primary">确定</Button> ;
 
 return (<div>
@@ -293,7 +293,7 @@ const xiu=(e)=>{
   const name= $('.user-name').val();
   const school=$('.user-school').val();
   var messages={user_id:user_id,name:name,school:school}
-  fetch("http://127.0.0.1:8000/edit", {
+  fetch("http://172.16.1.71:8000/edit", {
       method: 'POST',
       credentials:"include",
       headers: {

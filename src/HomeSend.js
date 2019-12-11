@@ -9,7 +9,7 @@ const HomeSendUI =props=>{
   
     var sha={width:90 ,height:80,textAlign:'center',float:'left',margin:'auto 6px',cursor:'pointer'}
     return(
-      <div><div style={{position:"fixed", right:200,width: '320px' ,minHeight: '300px',float:'left',background: '#ffffff',border:'#80808038 1px solid',margin:'auto 10px',}}>
+      <div style={{position:"fixed", left:'70%',width: '320px' ,minHeight: '300px',float:'left',background: '#ffffff',border:'#80808038 1px solid',margin:'auto 10px',}}>
       <h3 style={{margin:"auto",textAlign:"center",margin:"20px auto"}}>创作中心</h3>
       <div style={{width: '100%' ,height:80,margin:"auto",marginBottom:"4rem"}}>
      
@@ -25,7 +25,7 @@ const HomeSendUI =props=>{
       </div>
       </div>
       <hr style={{opacity:0.5}}/>
-  </div></div>
+  </div>
     )
 }
 const gotoSend=(user_id,e)=>{     //跳转写文章
