@@ -77,7 +77,7 @@ class SendArt extends Component{
     }
     componentWillMount(){
       if(this.props.article_id){
-        http.get("http://172.16.1.71:8000/show?card="+this.props.article_id 
+        http.get("http://127.0.0.1:8000/show?card="+this.props.article_id 
         ).then(data => { //data数据处理
           const title = data['cards']['title'];
           var message = data['cards']['message'];
@@ -111,7 +111,7 @@ class SendArt extends Component{
          url='edit?card='+this.props.article_id;
       }
       
-     fetch("http://172.16.1.71:8000/"+url , {
+     fetch("http://127.0.0.1:8000/"+url , {
         method: 'POST',
         credentials: 'include',
         headers: {
@@ -149,14 +149,14 @@ class SendArt extends Component{
           setTimeout(() => {
           var data =new FormData();
           data.append('img',file)
-           fetch("http://172.16.1.71:8000/upload/image?kind=article", {
+           fetch("http://127.0.0.1:8000/upload/image?kind=article", {
              method: 'POST',
              credentials: 'include',
              mode: 'cors',
              body: data
            }).then(res=>res.json().then(data=>{
               if(data==="上传成功！"){
-                callback("http://172.16.1.71:8000/images/"+file.name)
+                callback("http://127.0.0.1:8000/images/"+file.name)
               } 
             }))
           
@@ -229,7 +229,7 @@ class SendArt extends Component{
         className="avatar-uploader"
         withCredentials={true}
         showUploadList={false}
-        action="http://172.16.1.71:8000/upload/image?kind=article"
+        action="http://127.0.0.1:8000/upload/image?kind=article"
         beforeUpload={this.beforeUpload}
         onChange={this.handleChange}
       >
@@ -273,7 +273,7 @@ class SendVid extends Component{
     }
     componentWillMount(){
       if(this.props.video_id){
-        http.get("http://172.16.1.71:8000/show?card="+this.props.video_id 
+        http.get("http://127.0.0.1:8000/show?card="+this.props.video_id 
         ).then(data => { //data数据处理
           const title = data['cards']['title'];
           const message = data['cards']['message'];
@@ -304,7 +304,7 @@ class SendVid extends Component{
         data.video_id=this.props.video_id;
         url='edit?card='+this.props.video_id;
      }
-      fetch("http://172.16.1.71:8000/"+url, {
+      fetch("http://127.0.0.1:8000/"+url, {
         method: 'POST',
         credentials: 'include',
         headers: {
@@ -350,7 +350,7 @@ class SendVid extends Component{
     name: 'vid',
     multiple: false,
     accept:".mp4",
-    action: 'http://172.16.1.71:8000/upload/media',
+    action: 'http://127.0.0.1:8000/upload/media',
     withCredentials: true
   };
   

@@ -17,7 +17,7 @@ function HOC(WrappedComponent) {
           follows:""
         }
         componentWillMount(){
-          http.post("http://172.16.1.71:8000/denglu" )
+          http.post("http://127.0.0.1:8000/denglu" )
                   .then(data => { //data数据处理
                     if(data!=="数据为空"){
                     var name = data['name'];
@@ -28,7 +28,7 @@ function HOC(WrappedComponent) {
                     var follows = data['follows'];
                     
                     var user_id = data['user_id'];
-                    this.setState({name:name,image:"http://172.16.1.71:8000/"+image,school:school,likes:likes,collects:collects,follows:follows,user_id:user_id});
+                    this.setState({name:name,image:"http://127.0.0.1:8000/"+image,school:school,likes:likes,collects:collects,follows:follows,user_id:user_id});
                     }
                   }).then(response => response, error => error);
          }

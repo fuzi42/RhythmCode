@@ -38,7 +38,7 @@ class Author extends Component{
       this.state={author_id:'',content_id:'',icon:false,author_name:'',author_image:'',moretitle:[],follow:false}
   }
  async componentWillMount(){
-   return await fetch("http://172.16.1.71:8000/show?people=" +this.props.author_id, {
+   return await fetch("http://127.0.0.1:8000/show?people=" +this.props.author_id, {
       method: 'GET',
       headers: {
         'content-type': "application/json" //json格式
@@ -59,7 +59,7 @@ class Author extends Component{
        }
      }
     this.setState({moretitle:moretitle,author_name: name, author_image: image,follow:follow})
-    // http.get("http://172.16.1.71:8000/show?follow/"+this.props.author_id+'=?').then(data=>{
+    // http.get("http://127.0.0.1:8000/show?follow/"+this.props.author_id+'=?').then(data=>{
     //     if(data['follow']){
     //     this.setState({follow:data['follow']})}
     //     }).then(response => response, error => error);
@@ -69,13 +69,13 @@ class Author extends Component{
   follow=()=>{
     if(this.props.author_id!==this.props.user_id){
     if(!this.state.follow){
-    http.post("http://172.16.1.71:8000/doing?follows="+this.props.author_id+'&sure=yes').then(data=>{
+    http.post("http://127.0.0.1:8000/doing?follows="+this.props.author_id+'&sure=yes').then(data=>{
       if(data['message']){message.success('关注成功！')}
       this.setState({follow:true})
       }).then(response => response, error => error);
     }
     else{
-      http.post("http://172.16.1.71:8000/doing?follows="+this.props.author_id+'&sure=no').then(data=>{
+      http.post("http://127.0.0.1:8000/doing?follows="+this.props.author_id+'&sure=no').then(data=>{
       if(data['message']){message.success('取消关注！')}
       this.setState({follow:false})
       }).then(response => response, error => error);

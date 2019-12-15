@@ -66,7 +66,7 @@ class Info extends Component {
   }
   getData() { //请求数据函数
 
-   return fetch("http://172.16.1.71:8000/show?people=" + this.props.user_id, {
+   return fetch("http://127.0.0.1:8000/show?people=" + this.props.user_id, {
       method: 'GET',
       headers: {
         'content-type': "application/json" //json格式
@@ -148,7 +148,7 @@ class Info extends Component {
     var content=map[this.state.hove];
     
     return (<div id='show' style={{
-        width: 760,
+        width: '60%',
         height: 'auto',
         margin: '60px auto',
         padding: 0,
@@ -182,11 +182,17 @@ class Info extends Component {
 
 const Edit =props=>{
    
-  return(<div style={{width:'100%',height:800,marginTop:60}}>
-      <div style={{width:'800px',height:600,margin:'auto',background:'#ffffff',textAlign:'center',padding:150}}>
+  return(<div style={{width:'100%',height:'auto',marginTop:60}}>
+      <div style={{width:'70%',height:'auto',margin:'auto',background:'#ffffff',textAlign:'center',padding:150}}>
           <div style={{}}><Avatar name={props.name} user_id={props.user_id}/></div>
           <div style={{margin:50,color:'black',fontSize:20}}>用户名：<input className='user-name' type='text' style={{border:'#80808038 1px solid',width:200,height:25,borderRadius: 5,outline:'none',padding: 5,background:'#cecccc40',fontSize:14}} defaultValue={props.name} onChange={(e)=>getname(e.target.value)}/></div>
           <div style={{margin:50,color:'black',fontSize:20}}>学校：<input className='user-school' type='text' style={{border:'#80808038 1px solid',width:200,height:25,borderRadius: 5,outline:'none',padding: 5,background:'#cecccc40',fontSize:14}} defaultValue={props.school} onChange={(e)=>getschool(e.target.value)}/></div>
+          <div style={{margin:50,color:'black',fontSize:20}}>性别：<input className='user-sex' type='text' style={{border:'#80808038 1px solid',width:200,height:25,borderRadius: 5,outline:'none',padding: 5,background:'#cecccc40',fontSize:14}} defaultValue='' /></div>
+          <div style={{margin:50,color:'black',fontSize:20}}>居住地：<input className='user-home' type='text' style={{border:'#80808038 1px solid',width:200,height:25,borderRadius: 5,outline:'none',padding: 5,background:'#cecccc40',fontSize:14}} defaultValue='' /></div>
+          <div style={{margin:50,color:'black',fontSize:20}}>所在行业：<input className='user-work' type='text' style={{border:'#80808038 1px solid',width:200,height:25,borderRadius: 5,outline:'none',padding: 5,background:'#cecccc40',fontSize:14}} defaultValue='' /></div>
+          <div style={{margin:50,color:'black',fontSize:20}}>职业经历：<input className='user-history' type='text' style={{border:'#80808038 1px solid',width:200,height:25,borderRadius: 5,outline:'none',padding: 5,background:'#cecccc40',fontSize:14}} defaultValue='' /></div>
+          <div style={{margin:50,color:'black',fontSize:20}}>教育经历：<input className='user-study' type='text' style={{border:'#80808038 1px solid',width:200,height:25,borderRadius: 5,outline:'none',padding: 5,background:'#cecccc40',fontSize:14}} defaultValue='' /></div>
+          <div style={{margin:50,color:'black',fontSize:20}}>个人简介：<input className='user-info' type='text' style={{border:'#80808038 1px solid',width:200,height:25,borderRadius: 5,outline:'none',padding: 5,background:'#cecccc40',fontSize:14}} defaultValue='' /></div>
           <Button onClick={()=>xiu(props.user_id)}>确定</Button>
       </div>
   </div>)
@@ -233,7 +239,7 @@ if (info.file.status === 'done') {
 }
 getData(user_id) { //请求数据函数
 
-fetch("http://172.16.1.71:8000/userinfo/" + user_id, {
+fetch("http://127.0.0.1:8000/userinfo/" + user_id, {
   method: 'GET',
   headers: {
     'content-type': "application/json" //json格式
@@ -262,7 +268,7 @@ var url='';
 var button= '';
 
 
- url = "http://172.16.1.71:8000/upload/image?kind=avator";
+ url = "http://127.0.0.1:8000/upload/image?kind=avator";
  button= <Button htmlType="submit" onClick={this.onSubmit} type="primary">确定</Button> ;
 
 return (<div>
@@ -293,7 +299,7 @@ const xiu=(e)=>{
   const name= $('.user-name').val();
   const school=$('.user-school').val();
   var messages={user_id:user_id,name:name,school:school}
-  fetch("http://172.16.1.71:8000/edit", {
+  fetch("http://127.0.0.1:8000/edit", {
       method: 'POST',
       credentials:"include",
       headers: {

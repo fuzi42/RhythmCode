@@ -10,7 +10,7 @@ import VideoCard from './VideoCard'
 class HomeContent extends Component{
     constructor(){
         super()
-        this.state={content_id:false,hove:'recommend',index:0,kind:"article",} 
+        this.state={content_id:false,hove:'recommend',index:0,kind:"article",index_test:0} 
     }
 componentDidMount(){
   document.addEventListener('scroll',this.test.bind(this,this.more))
@@ -23,9 +23,10 @@ componentDidMount(){
    //浏览器窗口高度
  var windowHeight = $(window).height();
 //  console.log(scrollTop,windowHeight,scrollHeight)
-  if (scrollTop + windowHeight - scrollHeight>-10) {
-     more()
-   }
+  if (scrollTop + windowHeight - scrollHeight>-1) {
+      more(this.state.index,this.state.kind)
+  }
+  this.setState({index_test:this.state.index})
  }
   point(e){
     if(e===undefined){e='article'}
@@ -34,14 +35,11 @@ componentDidMount(){
     });
     const id='#'+e;
        $(id).css({'border-bottom':'blue 2px solid'})
-    console.log(e)
-    this.setState({hove:e,content_id:false,index:0,kind:e});
-    setTimeout(() => {
-      if(e===this.state.hove){this.more();}
-    }, 50);
+    this.setState({hove:e,content_id:false,index:0,kind:e,index_test:0});
+    this.more(0,e);
   }   
-     more=()=>{    
-     return fetch("http://172.16.1.71:8000/show?cardlist="+this.state.index+"&kind="+this.state.kind, {
+     more=(index,kind)=>{    
+     return fetch("http://127.0.0.1:8000/show?cardlist="+index+"&kind="+kind, {
         method: 'GET',
         credentials: 'include',
         headers: {
@@ -49,30 +47,29 @@ componentDidMount(){
         },
         mode: 'cors'
       }).then(response => response.json()).then(data => { //data数据处理
-        // const id=data['id'];    
-        // var content_id=this.state.content_id;
-        
-        // if(content_id){
-        //   id.forEach(element => {
-        //       content_id.add(element);
-        //   });
-        // }
-        // else{content_id=new Set(id);}
-        // console.log(content_id)
-        // this.setState({content_id:content_id});  
-        // if(content_id.length % 5 <=3 && content_id.length % 5>1){this.more()}
-        
         var cardList = data["cards"];
-        var content_id =[];
-        for(var i in cardList){console.log(i)
-          content_id.push(cardList[i]["id"]);          
-        };
-        
-        this.setState({content_id:content_id})
+        var content_id = this.state.content_id;
+        var index = this.state.index 
+        if(!content_id){
+            content_id = []
+        }
+        if(cardList !== {}){
+        var flag =false;             //判断是否重复
+        for(var i in content_id){
+            if(cardList[0]["id"] === content_id[i]){
+              flag = true
+            }
+        }; 
+        if(!flag){
+          for(var j in cardList){
+            content_id.push(cardList[j]["id"]); 
+          }
+          index = index + 1
+        }
+        this.setState({content_id:content_id,index:index})
+        }
       }).then(response => response, error => error);    
-      
     }
-  
     render(){ 
     
       //  $('#recommend').css({'border-bottom':'blue 2px solid','margin-top':'10px'})
