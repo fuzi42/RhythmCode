@@ -164,12 +164,12 @@ class Article extends Component{
       if(this.props.edit){
       edit=<div className='mdui-ripple' style={{marginLeft:650,cursor:'pointer',textAlign:'right'}} onClick={this.edit}><Icon type="edit" theme="filled"/>编辑</div>;
       }
-      var video=''; var video_size={width:300,outline:"none",marginTop:30,};
+      var video=''; var video_size={width:'100%',outline:"none"};
       var kind="";
       if(this.state.kind ==="video"){
         title_image = ""
         title = <a className={titleName} href={url} target='_blank' onMouseEnter={this.handleEnter.bind(this,'title')}  onMouseLeave={this.handleOut.bind(this,'title')} rel="noopener noreferrer" style={{fontWeight:'bolder',fontSize:'18px',color:'black',textDecoration:'none',display:'block'}}>{this.state.title}</a>;
-        video= <video  src={this.state.video_url}  style={video_size} onClick={this.goto}/>
+        video= <div style={{float:'left',width:'45%',height:190,overflow:'hidden',marginTop:10,marginRight:30}}><video  src={this.state.video_url}  style={video_size} onClick={this.goto}/></div>
       if(this.state.label !==""){kind =<div style={{float:'right',padding:"5px 20px",backgroundColor:"#00000012",borderRadius:20}}>{this.state.label}</div>}
         if(this.props.hover){
           $("body").css("background",'white');
@@ -177,7 +177,7 @@ class Article extends Component{
           title = <h3 style={{fontWeight:'bolder',fontSize:'18px',color:'black',textDecoration:'none'}}>{this.state.title}</h3>
           video_size={width:670,height:450,background:'black',outline:"none",marginBottom:20};$(".face").css("padding","")
           video= <video  src={this.state.video_url} controls="controls" style={video_size}/>
-      }else{ text_size ={overflow:'hidden',cursor:'pointer',display:'inline',marginBottom:50,marginLeft:30,position:'relative',bottom:80,width:280} }
+      }else{ text_size ={overflow:'hidden',cursor:'pointer',display:'inline-block',position:'relative',width:'40%',height:170,paddingTop:20} }
       }
       if(this.state.like){
         const className='.likes'+this.props.id;
