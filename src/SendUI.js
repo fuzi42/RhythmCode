@@ -21,10 +21,11 @@ import tasklists from 'markdown-it-task-lists'
 import http from './Http'
 // -------------------------------------
 //发布页面
-const Home =props=>{    
+const Home =props=>{
+      $("body").css("background",'white');
        const send_id= props.match.params.send_id.substring(0,5);
        var content_id='';
-      
+
           content_id=props.match.params.send_id.substring(6);
           console.log(send_id,content_id)
         var tap={
@@ -41,10 +42,10 @@ const Home =props=>{
             <div style={{width: '100%' ,height: 'auto', background: '#ffffff',top:0,}}>
         <div id='top' style={{position:'absolute',top:0,left:0}} ></div>
               <div id='fixed' style={{width: '100%' ,height: 60,background: '#ffffff',color: 'black',position:'fixed',top:0,borderBottom:'#80808066 1px solid'}}>
-                 <div style={{width: '1000px' ,height: 60,margin:'auto',padding:5, lineHeight: '50px'}}> 
+                 <div style={{width: '1000px' ,height: 60,margin:'auto',padding:5, lineHeight: '50px'}}>
                       <a href='/ahome' style={{fontSize: 30 ,color:'#0142ff',margin: 'auto 10px',float:'left',textDecoration:'none' }} >TSTE</a>
                     <h3 style={{width:80,fontWeight:900,float:'left',margin:0,textAlign:'center',borderLeft:'1px #80808042 solid'}}>{tap_title}</h3>
-                     
+
                  </div>
               </div>
           {tap_child}
@@ -77,7 +78,7 @@ class SendArt extends Component{
     }
     componentWillMount(){
       if(this.props.article_id){
-        http.get("http://127.0.0.1:8000/show?card="+this.props.article_id 
+        http.get("http://127.0.0.1:8000/show?card="+this.props.article_id
         ).then(data => { //data数据处理
           const title = data['cards']['title'];
           var message = data['cards']['message'];
@@ -85,9 +86,9 @@ class SendArt extends Component{
         if(data['cards']['image']!=='' && data['cards']['image']!==null ){
             picture =data['cards']['image']
           }
-         
+
           this.setState({title:title,data:message,title_image:picture});
-          
+
         }).then(response => response, error => error);
       }
     }
@@ -95,7 +96,7 @@ class SendArt extends Component{
     $('#fixed').css('position','relative')
      console.log(this.props.user_id)
    }
-    
+
     send(){
       if(this.mdEditor && this.mdEditor.getHtmlValue()){
         const text=this.mdEditor.getHtmlValue();
@@ -110,7 +111,7 @@ class SendArt extends Component{
          data.article_id=this.props.article_id;
          url='edit?card='+this.props.article_id;
       }
-      
+
      fetch("http://127.0.0.1:8000/"+url , {
         method: 'POST',
         credentials: 'include',
@@ -120,7 +121,7 @@ class SendArt extends Component{
         mode: 'cors',
         body: JSON.stringify(data)
       }).then(response => response.json()).then(data => { //data数据处理
-        
+
         if(data['message']==="发布成功！" || data['message']==="修改成功！"){
           message.success(data['message']);
           setTimeout(function(){
@@ -133,9 +134,9 @@ class SendArt extends Component{
     handleEditorChange ({html, text}) {}
     handleImageUpload(file, callback) {
       const reader = new FileReader();
-     
-      reader.onload = () => {      
-        const convertBase64UrlToBlob = (urlData) => {  
+
+      reader.onload = () => {
+        const convertBase64UrlToBlob = (urlData) => {
           let arr = urlData.split(','), mime = arr[0].match(/:(.*?);/)[1]
           let bstr = atob(arr[1])
           let n = bstr.length
@@ -145,7 +146,7 @@ class SendArt extends Component{
           }
           return new Blob([u8arr], {type:mime})
         }
-        const blob = convertBase64UrlToBlob(reader.result) ; 
+        const blob = convertBase64UrlToBlob(reader.result) ;
           setTimeout(() => {
           var data =new FormData();
           data.append('img',file)
@@ -157,23 +158,23 @@ class SendArt extends Component{
            }).then(res=>res.json().then(data=>{
               if(data==="上传成功！"){
                 callback("http://127.0.0.1:8000/images/"+file.name)
-              } 
+              }
             }))
-          
+
          }, 1000)
       }
       reader.readAsDataURL(file)
     }
     gettitle(event) {
       this.setState({title: event.target.value})
-    
+
   }
    getBase64(img, callback) {
     const reader = new FileReader();
     reader.addEventListener('load', () => callback(reader.result));
     reader.readAsDataURL(img);
   }
-  
+
    beforeUpload(file) {
     const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
     if (!isJpgOrPng) {
@@ -202,9 +203,9 @@ class SendArt extends Component{
       );
     }
   };
-    render(){  
+    render(){
       var MOCK_DATA = "Hello.\n\n * This is markdown.\n * It is fun\n * Love it or leave it."
-      if(this.props.article_id){MOCK_DATA=this.state.data}              
+      if(this.props.article_id){MOCK_DATA=this.state.data}
      const uploadButton = (
       <div>
         <Icon type={this.state.loading ? 'loading' : 'plus'} />
@@ -220,7 +221,7 @@ class SendArt extends Component{
     }
       return(<div style={{width:800,height:'auto',margin:'auto'}}>
         <div style={{width:'100%',height:'auto',background: '#ffffff',margin:'auto',border:'none',padding:50}}>
-          
+
            <div style={{margin:'10px auto'}}>
              <div style={{fontSize:16,color:'black'}}></div>
              <div style={{}}> <Upload
@@ -249,21 +250,21 @@ class SendArt extends Component{
                md: true,
                html: true
              },
-             
+
            }}
-           onChange={this.handleEditorChange} 
+           onChange={this.handleEditorChange}
            onImageUpload={this.handleImageUpload}
          />
         <div style={{margin:'20px auto'}}><Button >保存</Button></div>
         <div><Button onClick={this.send}>发布</Button></div>
         </div>
-       
-        
+
+
       </div>)
     }
   }
-  
-class SendVid extends Component{ 
+
+class SendVid extends Component{
     constructor(){
       super()
       this.state={title: '',message:'',video_url:'',videoUpdate:false,value:""}
@@ -273,13 +274,13 @@ class SendVid extends Component{
     }
     componentWillMount(){
       if(this.props.video_id){
-        http.get("http://127.0.0.1:8000/show?card="+this.props.video_id 
+        http.get("http://127.0.0.1:8000/show?card="+this.props.video_id
         ).then(data => { //data数据处理
           const title = data['cards']['title'];
           const message = data['cards']['message'];
           const video_url = data['cards']['video'];
           this.setState({title:title,message:message,video_url:video_url});
-          
+
         }).then(response => response, error => error);
       }
     }
@@ -288,7 +289,7 @@ class SendVid extends Component{
   }
     gettitle(event) {
         this.setState({title: event.target.value})
-      
+
     }
     getmessage(event) {
       this.setState({message: event.target.value})
@@ -318,7 +319,7 @@ class SendVid extends Component{
                   setTimeout(function(){
                     window.location.href='/ahome/'
                   },2000)
-                  
+
                 }
                 else{
                   message.error('发布失败！')
@@ -341,11 +342,11 @@ class SendVid extends Component{
       console.log(value);
       this.setState({ value });
     };
-  
+
     render(){
       const { TreeNode } = TreeSelect;
       const Dragger = Upload.Dragger;
-  
+
   const props = {
     name: 'vid',
     multiple: false,
@@ -353,10 +354,10 @@ class SendVid extends Component{
     action: 'http://127.0.0.1:8000/upload/media',
     withCredentials: true
   };
-  
+
       return(<div style={{width:800,height:800 ,margin:'auto',}}>
           <div style={{width:800,height:'100%',background: '#ffffff',margin:'auto',border:'none',padding:50}}>
-          <TreeSelect 
+          <TreeSelect
         showSearch
         style={{ width: '100px' }}
         value={this.state.value}
@@ -370,7 +371,7 @@ class SendVid extends Component{
         <TreeNode value="Python" title="Python" key="0-1" />
         <TreeNode value="Java" title="Java" key="0-2" />
         <TreeNode value="C++" title="C++" key="0-3" />
-        <TreeNode value="GO" title="GO" key="0-4" />  
+        <TreeNode value="GO" title="GO" key="0-4" />
       </TreeSelect>
            <div style={{margin:'10px auto',marginTop:30}}>标题：<input type='text' style={{border:'#80808038 1px solid',width:500,height:25,borderRadius: 5,outline:'none',padding: 5,background:'#cecccc40'}} value={this.state.title} onChange={this.gettitle}/></div>
            <div style={{margin:'10px auto'}}> 描述：<br/><textarea style={{border:'#80808038 1px solid',width:500,height:200,margin:'auto 40px',borderRadius:5,outline:'none',resize:'none',padding: 5,background:'#cecccc40'}} value={this.state.message} onChange={this.getmessage}/></div>

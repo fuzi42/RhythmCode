@@ -31,7 +31,7 @@ const Home=props=>{
               {tapmap[tap]}
             </div>
         )
-    
+
 }
 class Info extends Component {
   constructor() {
@@ -60,9 +60,9 @@ class Info extends Component {
     this.update = this.update.bind(this);
   }
   componentWillMount(){
-    
+
       this.getData();
-     
+
   }
   getData() { //请求数据函数
 
@@ -73,7 +73,6 @@ class Info extends Component {
       },
       mode: 'cors'
     }).then(response => response.json()).then(data => { //data数据处理
-      const id = data['user_id'];
       const name = data['name'];
       const school = data['school'];
       const image = data['userimage'];
@@ -88,7 +87,7 @@ class Info extends Component {
       }
       const collect_id=data['collects'];
       const follow_id=data['follows'];
-      this.setState({name: name, school: school, image: image, user_id:id,article_id:article_id,collect_id:collect_id,follow_id:follow_id})
+      this.setState({name: name, school: school, image: image,article_id:article_id,collect_id:collect_id,follow_id:follow_id})
 
     }).then(response => response, error => error);
 
@@ -108,51 +107,50 @@ class Info extends Component {
   }
   render() {
     const put={height:50,float:'left',margin:'10px 20px',padding:10,fontSize:18,cursor:'pointer'}
-    
+
     if(this.state.hove){
       for(var i=1;i<=4;i++){
         const id='#my'+i
         if(i===this.state.hove){
-          
+
           $(id).css('color','black');
         }
         else{
-         
+
           $(id).css('color','gray');
         }
       }
     }
-  
+
     var article_list=[];
     var video_list=[];
-      
       for( var item of this.state.article_id){
       if (item["kind"]){
-      article_list.push(<ArticleCard id={article_list.length} key={item["id"]}  user_id={this.state.user_id} article_id={item["id"]} user_name={this.state.name} user_image={this.state.image} edit={this.props.isAuthor}/>)
-      } 
+      article_list.push(<ArticleCard id={article_list.length} key={item["id"]}  user_id={this.props.user_id} article_id={item["id"]} user_name={this.state.name} user_image={this.state.image} edit={this.props.isAuthor}/>)
+      }
       else{
-      video_list.push(<ArticleCard id={article_list.length} key={item["id"]}  user_id={this.state.user_id} article_id={item["id"]} user_name={this.state.name} user_image={this.state.image} edit={this.props.isAuthor}/>)
+      video_list.push(<ArticleCard id={article_list.length} key={item["id"]}  user_id={this.props.user_id} article_id={item["id"]} user_name={this.state.name} user_image={this.state.image} edit={this.props.isAuthor}/>)
       }
     }
-    
+
     var collect_list=[];
-    for( var item1 of this.state.collect_id){ 
-      collect_list.push(<ArticleCard id={collect_list.length} key={item1}  user_id={this.state.user_id} article_id={item1} user_name={this.state.name} user_image={this.state.image}/>)
+    for( var item1 of this.state.collect_id){
+      collect_list.push(<ArticleCard id={collect_list.length} key={item1}  user_id={this.props.user_id} article_id={item1} user_name={this.state.name} user_image={this.state.image}/>)
     }
     var follow_list=[];
     for( var item3 of this.state.follow_id){
       if(item3){follow_list.push(<FollowCard follow_id={item3}/>)}
-    } 
-    
+    }
+
     const map=[null,article_list,video_list,collect_list,follow_list];
     var content=map[this.state.hove];
-    
+
     return (<div id='show' style={{
         width: '60%',
         height: 'auto',
         margin: '60px auto',
         padding: 0,
-        textAlign: 'left',  
+        textAlign: 'left',
       }}>
       <div style={{width:'100%',height:300,background:'#ffffff ',border:'#80808038 1px solid',margin:'20px auto'}}>
       <div style={{float:'left',margin:'40px'}}><img src={this.state.image} alt='' style={{
@@ -161,7 +159,7 @@ class Info extends Component {
       }}/></div>
       <div style={{float:'left',margin:'80px 20px',padding:10}}>
       <div ><h2>{this.state.name}</h2></div>
-      
+
       <div><h2>{this.state.school}</h2></div>
      </div>
       {/* <div style={{float:'right',margin:'10px 10px'}}>修改头像：</div><Avatar name={this.state.name} user_id={this.state.user_id} get={this.get} update={this.update}/>
@@ -181,7 +179,7 @@ class Info extends Component {
 }
 
 const Edit =props=>{
-   
+
   return(<div style={{width:'100%',height:'auto',marginTop:60}}>
       <div style={{width:'70%',height:'auto',margin:'auto',background:'#ffffff',textAlign:'center',padding:150}}>
           <div style={{}}><Avatar name={props.name} user_id={props.user_id}/></div>
@@ -310,7 +308,7 @@ const xiu=(e)=>{
   }).then(response => response.json()).then(data => { //data数据处理
       if(data['message']==="update successfully"){
           message.success('修改成功！');
-          
+
       }
       else{
           message.error('修改失败！');

@@ -5,6 +5,7 @@ import {
       Dropdown,
   } from 'antd';
   import $ from 'jquery';
+  import http from './Http'
   import logo from './images/logo.png'
 const HomeTitleUI= props=>{
  console.log(props.user_id)
@@ -41,16 +42,31 @@ const HomeTitleUI= props=>{
                           <a href='#' style={a1} >首页</a>
                           <a href='#' style={a1} >发现</a>
                           <a href='#' style={a1} >话题</a>
-                          <input type='text' style={{width:300,height:30,color:'black',margin: 'auto 10px',padding:10, background: '#cecccc47', outline:'none',border: 'none',borderRadius: 5}}/>
-                          <button style={{width:50,height:30,background:'#0084ff',border:'none',color: 'white',borderRadius:5,lineHeight:1}}>搜索</button>
+                          <input type='text' id="search" style={{width:300,height:30,color:'black',margin: 'auto 10px',padding:10, background: '#cecccc47', outline:'none',border: 'none',borderRadius: 5}}/>
+                          <button style={{width:50,height:30,background:'#0084ff',border:'none',color: 'white',borderRadius:5,lineHeight:1}} onClick={search}>搜索</button>
                       </div>
                      <div style={{float:'right',cursor:'pointer'}} >
                         {user_image}
                      </div>
                  </div>
               </div>
+              <div id="search_result" style={{visibility:"hidden",zIndex:1000,width:'20%',height:500,background:"#f2f2f8d4",position:"absolute",top:50,margin:"auto",left:540}}>
+
+              </div>
               </div>
         )
+}
+const search =()=> {
+    http.get("http://127.0.0.1:8000/search?search="+$("#search").val()
+    ).then(data => { //data数据处理
+        $("#search_result").css("visibility","visible")
+        for (var i in data["cards"]){
+            var url = "/ahome/"+data["cards"][i]["user_id"]+"/"+data["cards"][i]["id"]
+            $("#search_result").append("<div style='background:white;margin:20px 0;color:black;width:100%;'><a class='s-result"+i+"'href='"+url+"'>"+data["cards"][i]["title"]+"</a></div>")
+        }
+    //   this.setState({title:title,message:message,video_url:video_url});
+
+    }).then(response => response, error => error);
 }
 const getCookie=()=> {
     var name = "denglu=";
