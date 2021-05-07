@@ -56,7 +56,7 @@ func zhuce(c echo.Context) (err error) {
         }
         defer db.Close()    //关闭数据库
         id := time.Now().Unix()   //用户Id
-        demoImage :="avator/demo.jpg"
+        demoImage :="avatar/demo.jpg"
         db.Exec("insert into info(id,username,password,school,likes,collects,follows,userimages) values (?,?,?,?,'','','',?)",id,user.Name,user.Password,user.School,demoImage)     
         fmt.Println("注册成功！")
         resp :=map[string]string{"datas": "update successfully"}
@@ -135,7 +135,7 @@ func upload(c echo.Context) error{
     act :=c.Param("what")
     if act =="image" {
         kind := c.QueryParam("kind")
-        if kind == "avator" {
+        if kind == "avatar" {
         file, err := c.FormFile("img")
         if err != nil {
             return err
@@ -147,7 +147,7 @@ func upload(c echo.Context) error{
         defer src.Close()
     
         // Destination
-        dst, err := os.Create("./avator/"+file.Filename)
+        dst, err := os.Create("./avatar/"+file.Filename)
         if err != nil {
             return err
         }
@@ -161,7 +161,7 @@ func upload(c echo.Context) error{
             return err
             }
             defer db.Close()    //关闭数据库
-            imageUrl :="avator/"+file.Filename
+            imageUrl :="avatar/"+file.Filename
             db.Exec("update info set userimages=? where id=?",imageUrl,user_id)      
             return c.JSON(http.StatusOK, "上传成功！")
         }
@@ -580,7 +580,7 @@ func main() {
     e.POST("/edit",edit)                 //修改路由
     e.POST("/doing",doing)              //用户操作路由-点赞-收藏-留言-关注
     e.GET("/search",search)    //查询搜索
-    e.Static("/avator","./avator")    //用户头像资源
+    e.Static("/avatar","./avatar")    //用户头像资源
     e.Static("/images","./images")    //用户图片资源
     e.Static("/media","./media")    //用户视频资源
     
